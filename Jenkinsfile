@@ -18,8 +18,7 @@
             stage("Build") {
                 steps {
                 withCredentials([usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'username', passwordVariable: 'password')]){
-                sh("echo $password > /tmp/sshkey")
-                sh("ssh-keygen -b 2048 -t rsa -f /tmp/sshkey -q")
+                sh("ssh-keygen -b 4096 -t rsa -f ~/.ssh/rsa_jenkins -q -N $password")
                 sh("git checkout test")
                 sh("git pull")
                 sh("git checkout master")
