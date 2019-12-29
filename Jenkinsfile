@@ -18,7 +18,8 @@
             stage("Build") {
                 steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_test', keyFileVariable: 'SSH_KEY')]) {
-                sh("echo $SSH_KEY")
+                sh("echo $SSH_KEY > my_file")
+                sh("cat my_file")
                 sh("git push origin master")
                 }
                 }
