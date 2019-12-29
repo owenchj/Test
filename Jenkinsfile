@@ -17,13 +17,14 @@
             }
             stage("Build") {
                 steps {
-                    script {
-                        echo "Building..."
-                        sh 'git checkout test'
-                        sh 'git checkout master'
-                        sh 'git merge test'
-                        sh 'git push origin master'
-                    }
+                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_test', keyFileVariable: 'SSH_KEY')]) {
+                sh("git checkout test")
+                sh("git pull")
+                sh("git checkout master")
+                sh("git pull")
+                sh("git merge test")
+                sh("git push origin master")
+                }
                 }
             }
         }
