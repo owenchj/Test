@@ -17,17 +17,22 @@
             }
             stage("Build") {
                 steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_test', keyFileVariable: 'SSH_KEY')]) {
-                sh("rm -rf ../Test")
-                sh("git clone git@github.com:owenchj/Test.git")
-                sh("cd Test")
+                withCredentials([usernamePassword(credentialsId: 'jenkins_test', usernameVariable: 'username', passwordVariable: 'password')]){
                 sh("git checkout test")
                 sh("git pull")
                 sh("git checkout master")
                 sh("git pull")
                 sh("git merge test")
-                sh("git push origin master")
+                sh("git push http://$username:$password@github.com/owenchj/Test.git master")
                 }
+                // withCredentials([sshUserPrivateKey(credentialsId: 'jenkins_test', keyFileVariable: 'SSH_KEY')]) {
+                // sh("git checkout test")
+                // sh("git pull")
+                // sh("git checkout master")
+                // sh("git pull")
+                // sh("git merge test")
+                // sh("git push origin master")
+                // }
                 }
             }
         }
