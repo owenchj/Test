@@ -19,6 +19,7 @@
                 steps {
                     script {
                         echo "Building..."
+                        sh 'git checkout test'
                         sh 'git checkout master'
                         sh 'git merge test'
                         sh 'git commit -am "Merged develop branch to master'
